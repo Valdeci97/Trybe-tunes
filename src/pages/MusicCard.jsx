@@ -78,3 +78,6 @@ MusicCard.propTypes = {
 };
 
 export default MusicCard;
+
+// Fonte para a validação do favorites: https://stackoverflow.com/questions/38237439/route-object-validation-as-props-in-react
+// Failed prop type: Invalid prop `favorites[0]` of type `array` supplied to `MusicCard`, expected an object / erro original para "favorites: PropTypes.arrayOf(Proptypes.object).isRequired"

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from './MusicCard';
@@ -13,6 +14,7 @@ class Album extends React.Component {
       songsList: [],
       loading: true,
       artistInfo: {},
+      favorites: {},
     };
   }
 
@@ -25,15 +27,23 @@ class Album extends React.Component {
     const result = await getMusics(id);
     // console.log(result);
     const info = result[0];
+    const favorites = await getFavoriteSongs();
+    // console.log(lookingForFavorites[0]);
     this.setState({
       loading: false,
       artistInfo: info,
       songsList: result.slice(1),
+      favorites,
     });
   }
 
   render() {
-    const { songsList, loading, artistInfo: { artistName, collectionName } } = this.state;
+    const {
+      songsList,
+      loading,
+      favorites,
+      artistInfo: { artistName, collectionName },
+    } = this.state;
     return (
       <div data-testid="page-album">
         <Header />
@@ -50,6 +60,7 @@ class Album extends React.Component {
                     trackName={ trackName }
                     previewUrl={ previewUrl }
                     trackId={ trackId }
+                    favorites={ favorites }
                   />
                 ))
               }
@@ -65,7 +76,7 @@ Album.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
-    }).isRequired,
+    }),
   }).isRequired,
 };
 

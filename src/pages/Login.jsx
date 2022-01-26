@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { createUser } from '../services/userAPI';
 import LoadingPage from './LoadingPage';
+import './login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -47,8 +48,8 @@ class Login extends React.Component {
   render() {
     const { btnState, loading, loaded } = this.state;
     return (
-      <div data-testid="page-login">
-        <form>
+      <div data-testid="page-login" className="login-container">
+        <form className="form-container">
           <label htmlFor="name">
             <input
               id="name"
@@ -62,12 +63,13 @@ class Login extends React.Component {
             data-testid="login-submit-button"
             disabled={ btnState }
             onClick={ this.handleSubmitButton }
+            className="btn"
           >
             Entrar
           </button>
         </form>
         {
-          loading ? <LoadingPage /> : ''
+          loading ? <LoadingPage /> : null
         }
         { loaded && <Redirect to="/search" /> }
       </div>
